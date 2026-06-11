@@ -9,5 +9,6 @@ Focus on:
 - security issues
 - operational risks
 - documentation drift
+- follow-up work that should be tracked separately
 
 Return findings first, ordered by severity.
