@@ -1,0 +1,20 @@
+{
+  "targetRepositories": [
+    "paladini/team-ai-sync-demo-api",
+    "paladini/team-ai-sync-demo-web"
+  ],
+  "syncMode": "overwrite",
+  "deleteOrphans": false,
+  "files": ["AGENTS.md", "CLAUDE.md", ".editorconfig"],
+  "directories": [".github/instructions", ".github/prompts"],
+  "exclude": [],
+  "prOptions": {
+    "title": "chore: sync team AI collaboration files",
+    "body": "Synced from {{sourceRepo}} at {{sourceCommit}}.",
+    "commitMessage": "chore(ai): sync shared team guidance",
+    "branch": "chore/team-ai-sync",
+    "labels": ["automation", "ai-guidance"],
+    "userReviewers": [],
+    "teamReviewers": []
+  }
+}

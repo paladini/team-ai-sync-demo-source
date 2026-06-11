@@ -1,0 +1,42 @@
+name: Sync AI Assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate and report changes without creating pull requests
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+  push:
+    branches: [main]
+    paths:
+      - AGENTS.md
+      - CLAUDE.md
+      - .editorconfig
+      - .github/instructions/**
+      - .github/prompts/**
+      - sync-config.json
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - id: sync
+        uses: paladini/team-ai-sync@v0-demo
+        with:
+          github-token: ${{ secrets.TEAM_SYNC_ADMIN_PAT }}
+          config-path: sync-config.json
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+      - name: Show sync outputs
+        run: |
+          echo 'changed=${{ steps.sync.outputs.changed }}'
+          echo 'pr-urls=${{ steps.sync.outputs.pr-urls }}'
+          echo 'synced-targets=${{ steps.sync.outputs.synced-targets }}'
+          echo 'failed-targets=${{ steps.sync.outputs.failed-targets }}'
